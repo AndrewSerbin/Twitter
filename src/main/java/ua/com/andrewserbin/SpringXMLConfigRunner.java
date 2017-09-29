@@ -16,14 +16,18 @@ public class SpringXMLConfigRunner {
         ApplicationContext context =
                 new ClassPathXmlApplicationContext("repoContext.xml",
                         "userContext.xml", "serviceContext.xml");
+        
         User user = (User) context.getBean("user");
+        
         TimelineService timelineService = (TimelineService) context.getBean("timelineService");
         Tweet tweet = (Tweet) context.getBean("tweet");
         timelineService.addTweet(tweet);
         user.getTimeline().allTweets().forEach(System.out::println);
+        
         TweetService tweetService = (TweetService) context.getBean("tweetService");
         timelineService.likeTweet(tweet);
         user.getTimeline().allTweets().forEach(System.out::println);
+        
         timelineService.addTweet(tweetService.getTweet());
         user.getTimeline().allTweets().forEach(System.out::println);
     }
